@@ -10,6 +10,20 @@ import Loader from '../components/Loader';
 const Dashboard = () => {
   const { user } = useContext(AuthContext);
 
+  const formatParagraphs = (text) => {
+    if (!text) return null;
+    return text.split('\n').map((paragraph, index) => {
+      if (paragraph.trim() === '') {
+        return <div key={index} className="h-3" />;
+      }
+      return (
+        <p key={index} className="mb-3 last:mb-0">
+          {paragraph}
+        </p>
+      );
+    });
+  };
+
   // States
   const [prompt, setPrompt] = useState('');
   const [tone, setTone] = useState('Professional');
@@ -263,8 +277,8 @@ const Dashboard = () => {
                           {copiedSection === 'body' ? <Check className="h-4 w-4 text-green-400" /> : <Copy className="h-4 w-4" />}
                         </button>
                       </div>
-                      <div className="p-4 bg-white/5 rounded-xl border border-white/5 text-sm text-gray-300 whitespace-pre-wrap font-sans min-h-[180px] select-all leading-relaxed">
-                        {currentCampaign.body}
+                      <div className="p-4 bg-white/5 rounded-xl border border-white/5 text-sm text-gray-300 font-sans min-h-[180px] select-all leading-relaxed">
+                        {formatParagraphs(currentCampaign.body)}
                       </div>
                     </div>
                   </div>
@@ -281,8 +295,8 @@ const Dashboard = () => {
                         {copiedSection === 'linkedin' ? <Check className="h-4 w-4 text-green-400" /> : <Copy className="h-4 w-4" />}
                       </button>
                     </div>
-                    <div className="p-4 bg-white/5 rounded-xl border border-white/5 text-sm text-gray-300 whitespace-pre-wrap font-sans min-h-[220px] select-all leading-relaxed">
-                      {currentCampaign.linkedinDm}
+                    <div className="p-4 bg-white/5 rounded-xl border border-white/5 text-sm text-gray-300 font-sans min-h-[220px] select-all leading-relaxed">
+                      {formatParagraphs(currentCampaign.linkedinDm)}
                     </div>
                   </div>
                 )}
@@ -298,8 +312,8 @@ const Dashboard = () => {
                         {copiedSection === 'followup' ? <Check className="h-4 w-4 text-green-400" /> : <Copy className="h-4 w-4" />}
                       </button>
                     </div>
-                    <div className="p-4 bg-white/5 rounded-xl border border-white/5 text-sm text-gray-300 whitespace-pre-wrap font-sans min-h-[220px] select-all leading-relaxed">
-                      {currentCampaign.followUp}
+                    <div className="p-4 bg-white/5 rounded-xl border border-white/5 text-sm text-gray-300 font-sans min-h-[220px] select-all leading-relaxed">
+                      {formatParagraphs(currentCampaign.followUp)}
                     </div>
                   </div>
                 )}
@@ -458,8 +472,8 @@ const Dashboard = () => {
                       Copy
                     </button>
                   </div>
-                  <div className="p-4 bg-white/5 rounded-xl border border-white/5 text-gray-300 whitespace-pre-wrap select-all leading-relaxed font-sans max-h-48 overflow-y-auto">
-                    {selectedHistoryItem.body}
+                  <div className="p-4 bg-white/5 rounded-xl border border-white/5 text-gray-300 select-all leading-relaxed font-sans max-h-48 overflow-y-auto">
+                    {formatParagraphs(selectedHistoryItem.body)}
                   </div>
                 </div>
 
@@ -475,8 +489,8 @@ const Dashboard = () => {
                       Copy
                     </button>
                   </div>
-                  <div className="p-4 bg-white/5 rounded-xl border border-white/5 text-gray-300 whitespace-pre-wrap select-all leading-relaxed font-sans max-h-40 overflow-y-auto">
-                    {selectedHistoryItem.linkedinDm}
+                  <div className="p-4 bg-white/5 rounded-xl border border-white/5 text-gray-300 select-all leading-relaxed font-sans max-h-40 overflow-y-auto">
+                    {formatParagraphs(selectedHistoryItem.linkedinDm)}
                   </div>
                 </div>
 
@@ -492,8 +506,8 @@ const Dashboard = () => {
                       Copy
                     </button>
                   </div>
-                  <div className="p-4 bg-white/5 rounded-xl border border-white/5 text-gray-300 whitespace-pre-wrap select-all leading-relaxed font-sans max-h-40 overflow-y-auto">
-                    {selectedHistoryItem.followUp}
+                  <div className="p-4 bg-white/5 rounded-xl border border-white/5 text-gray-300 select-all leading-relaxed font-sans max-h-40 overflow-y-auto">
+                    {formatParagraphs(selectedHistoryItem.followUp)}
                   </div>
                 </div>
 
