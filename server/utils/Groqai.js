@@ -23,7 +23,7 @@ Always write highly custom templates based on the specific prompt details. Use n
 
 You must respond with a JSON object containing exactly these keys:
 1. "subject": A click-worthy, short (under 7 words), and intriguing email subject line.
-2. "body": The main cold email body text. Use placeholders like [Recipient Name], [Company Name], and [Your Name] where appropriate. Focus on value prop, use line breaks (\n) for readability, keep it under 150 words, and always include a professional closing sign-off (e.g., "Best regards,\n\n[Your Name]" or "Thanks,\n\n[Your Name]").
+2. "body": The main cold email body text. Use placeholders like [Recipient Name], [Company Name], and [Your Name] where appropriate. Focus on value prop. Split the body into at least 2 distinct, readable paragraphs using double line breaks (\n\n): Paragraph 1 should hook the reader and state the value proposition, and Paragraph 2 should state the low-friction Call to Action (CTA). Keep the total word count under 180 words, and always include a professional closing sign-off (e.g., "Best regards,\n\n[Your Name]").
 3. "linkedinDm": A short LinkedIn direct message connect note. It MUST be under 300 characters, conversational, and direct.
 4. "followUp": A brief, polite follow-up email template referencing the initial email, keep it under 80 words.
 
