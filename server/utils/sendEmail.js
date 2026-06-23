@@ -19,15 +19,26 @@ const sendEmail = async ({ to, subject, html, text }) => {
       throw new Error('Email credentials missing');
     }
   }
-  const transporter = nodemailer.createTransport({
-    service: 'gmail',
+  const smtpConfig = {
     auth: {
       user: process.env.EMAIL_USER,
       pass: process.env.EMAIL_PASS,
     },
     connectionTimeout: 5000, // 5 seconds timeout
     socketTimeout: 5000,     // 5 seconds socket timeout
-  });
+  };
+
+  // Dynamic SMTP configurations
+  if (process.env.EMAIL_HOST) {
+    smtpConfig.host = process.env.EMAIL_HOST;
+    smtpConfig.port = parseInt(process.env.EMAIL_PORT || '465', 10);
+    // Secure defaults to true unless explicitly set to false
+    smtpConfig.secure = process.env.EMAIL_SECURE === 'false' ? false : true;
+  } else {
+    smtpConfig.service = 'gmail';
+  }
+
+  const transporter = nodemailer.createTransport(smtpConfig);
 
   const mailOptions = {
     from: `"AI Cold Mail Generator" <${process.env.EMAIL_USER}>`,
