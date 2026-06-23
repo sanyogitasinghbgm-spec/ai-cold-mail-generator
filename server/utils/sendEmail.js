@@ -12,6 +12,58 @@ const sendEmail = async ({ to, subject, html, text }) => {
     return { mock: true, success: true };
   }
 
+  // Support Resend HTTP API (Port 443, never blocked by Render)
+  if (process.env.RESEND_API_KEY) {
+    console.log('RESEND_API_KEY detected. Sending email via Resend HTTP API...');
+    return new Promise((resolve, reject) => {
+      const https = require('https');
+      const reqData = JSON.stringify({
+        from: 'Acme <onboarding@resend.dev>', // Resend default onboarding sender
+        to: [to],
+        subject: subject,
+        html: html,
+        text: text
+      });
+      const req = https.request({
+        hostname: 'api.resend.com',
+        path: '/emails',
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
+          'Content-Type': 'application/json',
+          'Content-Length': Buffer.byteLength(reqData)
+        },
+        timeout: 5000
+      }, (res) => {
+        let body = '';
+        res.on('data', (chunk) => body += chunk);
+        res.on('end', () => {
+          if (res.statusCode >= 200 && res.statusCode < 300) {
+            try {
+              const parsed = JSON.parse(body);
+              console.log(`Email successfully dispatched via Resend: ${parsed.id}`);
+              resolve(parsed);
+            } catch (e) {
+              resolve({ success: true, raw: body });
+            }
+          } else {
+            reject(new Error(`Resend API failed with status ${res.statusCode}: ${body}`));
+          }
+        });
+      });
+      req.on('error', (err) => {
+        console.error('Resend HTTPS request error:', err);
+        reject(err);
+      });
+      req.on('timeout', () => {
+        req.destroy();
+        reject(new Error('Resend HTTPS request timed out'));
+      });
+      req.write(reqData);
+      req.end();
+    });
+  }
+
   const host = process.env.EMAIL_HOST || process.env.SMTP_HOST;
   const port = parseInt(process.env.EMAIL_PORT || process.env.SMTP_PORT || '465', 10);
   const user = process.env.EMAIL_USER || process.env.SMTP_USER;
