@@ -51,7 +51,10 @@ const register = async (req, res, next) => {
         } catch (emailErr) {
           console.error('Error resending OTP email:', emailErr);
           if (process.env.USE_MOCK_EMAIL !== 'true') {
-            return res.status(500).json({ success: false, message: 'Failed to send verification email.' });
+            return res.status(500).json({
+              success: false,
+              message: `Failed to send verification email. Details: ${emailErr.message}. Make sure EMAIL_USER and EMAIL_PASS environment variables are configured correctly on Render.`,
+            });
           }
         }
 
@@ -90,7 +93,10 @@ const register = async (req, res, next) => {
     } catch (emailErr) {
       console.error('Error sending OTP email:', emailErr);
       if (process.env.USE_MOCK_EMAIL !== 'true') {
-        return res.status(500).json({ success: false, message: 'Failed to send verification email.' });
+        return res.status(500).json({
+          success: false,
+          message: `Failed to send verification email. Details: ${emailErr.message}. Make sure EMAIL_USER and EMAIL_PASS environment variables are configured correctly on Render.`,
+        });
       }
     }
 
