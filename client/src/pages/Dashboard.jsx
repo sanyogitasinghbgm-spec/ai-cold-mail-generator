@@ -159,13 +159,13 @@ const Dashboard = () => {
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="text-xs font-semibold text-gray-400 block mb-1.5 ml-1">
+                <label className="text-xs font-medium text-zinc-400 block mb-1.5 ml-1">
                   Tone Style
                 </label>
                 <select
                   value={tone}
                   onChange={(e) => setTone(e.target.value)}
-                  className="glass-input w-full text-sm bg-cosmic-bg border-white/10 text-white"
+                  className="glass-input w-full text-sm bg-zinc-950 border-zinc-800 text-white"
                 >
                   <option value="Professional">💼 Professional</option>
                   <option value="Persuasive">🔥 Persuasive</option>
@@ -176,13 +176,13 @@ const Dashboard = () => {
               </div>
 
               <div>
-                <label className="text-xs font-semibold text-gray-400 block mb-1.5 ml-1">
+                <label className="text-xs font-medium text-zinc-400 block mb-1.5 ml-1">
                   Target Recipient
                 </label>
                 <select
                   value={targetAudience}
                   onChange={(e) => setTargetAudience(e.target.value)}
-                  className="glass-input w-full text-sm bg-cosmic-bg border-white/10 text-white"
+                  className="glass-input w-full text-sm bg-zinc-950 border-zinc-800 text-white"
                 >
                   <option value="Recruiter">Hiring Manager / Recruiter</option>
                   <option value="Lead Developer">Engineering Lead</option>
@@ -208,41 +208,41 @@ const Dashboard = () => {
             <div className="flex flex-col h-full justify-between">
               
               {/* Tab Header */}
-              <div className="flex border-b border-white/5 bg-white/2">
+              <div className="flex p-1.5 bg-zinc-900/80 border-b border-zinc-800/80 gap-1.5">
                 
                 <button
                   onClick={() => setActiveTab('email')}
-                  className={`flex-1 py-4 text-center text-sm font-semibold border-b-2 transition-all flex items-center justify-center gap-1.5 ${
+                  className={`flex-1 py-2 text-center text-xs font-semibold rounded-lg transition-all flex items-center justify-center gap-1.5 ${
                     activeTab === 'email' 
-                      ? 'border-brand-500 text-white bg-white/5' 
-                      : 'border-transparent text-gray-400 hover:text-white hover:bg-white/1'
+                      ? 'bg-zinc-800 text-white shadow-md border border-zinc-700/30' 
+                      : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800/30'
                   }`}
                 >
-                  <Mail className="h-4 w-4" />
+                  <Mail className="h-3.5 w-3.5" />
                   Cold Email
                 </button>
 
                 <button
                   onClick={() => setActiveTab('linkedin')}
-                  className={`flex-1 py-4 text-center text-sm font-semibold border-b-2 transition-all flex items-center justify-center gap-1.5 ${
+                  className={`flex-1 py-2 text-center text-xs font-semibold rounded-lg transition-all flex items-center justify-center gap-1.5 ${
                     activeTab === 'linkedin' 
-                      ? 'border-brand-500 text-white bg-white/5' 
-                      : 'border-transparent text-gray-400 hover:text-white hover:bg-white/1'
+                      ? 'bg-zinc-800 text-white shadow-md border border-zinc-700/30' 
+                      : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800/30'
                   }`}
                 >
-                  <MessageSquare className="h-4 w-4" />
+                  <MessageSquare className="h-3.5 w-3.5" />
                   LinkedIn DM
                 </button>
 
                 <button
                   onClick={() => setActiveTab('followup')}
-                  className={`flex-1 py-4 text-center text-sm font-semibold border-b-2 transition-all flex items-center justify-center gap-1.5 ${
+                  className={`flex-1 py-2 text-center text-xs font-semibold rounded-lg transition-all flex items-center justify-center gap-1.5 ${
                     activeTab === 'followup' 
-                      ? 'border-brand-500 text-white bg-white/5' 
-                      : 'border-transparent text-gray-400 hover:text-white hover:bg-white/1'
+                      ? 'bg-zinc-800 text-white shadow-md border border-zinc-700/30' 
+                      : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800/30'
                   }`}
                 >
-                  <Send className="h-4 w-4" />
+                  <Send className="h-3.5 w-3.5" />
                   Follow-Up Mail
                 </button>
 

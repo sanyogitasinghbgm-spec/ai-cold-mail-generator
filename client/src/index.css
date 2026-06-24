@@ -5,60 +5,82 @@
 
 @layer base {
   body {
-    @apply bg-cosmic-bg text-cosmic-text font-sans antialiased overflow-x-hidden;
+    @apply bg-black text-zinc-100 font-sans antialiased overflow-x-hidden;
     background-image: 
-      radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.08) 0%, transparent 40%),
-      radial-gradient(circle at 90% 80%, rgba(236, 72, 153, 0.06) 0%, transparent 40%);
+      radial-gradient(circle at 50% 0%, rgba(124, 58, 237, 0.06) 0%, transparent 50%),
+      radial-gradient(circle at 100% 100%, rgba(236, 72, 153, 0.03) 0%, transparent 40%);
     background-attachment: fixed;
   }
 
   /* Custom scrollbar */
   ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
   }
   ::-webkit-scrollbar-track {
-    background: rgba(11, 11, 26, 0.5);
+    background: #000000;
   }
   ::-webkit-scrollbar-thumb {
     background: rgba(255, 255, 255, 0.1);
-    border-radius: 4px;
+    border-radius: 9999px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: rgba(139, 92, 246, 0.3);
+    background: rgba(255, 255, 255, 0.2);
   }
 }
 
 @layer components {
+  /* Dotted grid background overlay */
+  .bg-dot-grid {
+    background-image: radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
   .glass-panel {
-    @apply bg-cosmic-card border border-cosmic-border backdrop-blur-md rounded-2xl;
+    @apply bg-zinc-950/80 border border-zinc-800/80 backdrop-blur-md rounded-xl shadow-2xl;
   }
 
   .glass-input {
-    @apply bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-400 outline-none transition-all duration-300 focus:border-brand-500 focus:bg-white/10 focus:ring-1 focus:ring-brand-500;
+    @apply bg-zinc-900/60 border border-zinc-800 rounded-lg px-4.5 py-2.5 text-sm text-white placeholder-zinc-500 outline-none transition-all duration-200 focus:border-zinc-500 focus:bg-zinc-950 focus:ring-1 focus:ring-zinc-800;
   }
 
   .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-brand-400 via-pink-400 to-indigo-400;
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-zinc-100 via-zinc-200 to-zinc-400;
   }
 
   .text-gradient-purple {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-violet-400 to-fuchsia-400;
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-violet-400 to-indigo-400;
   }
 
   .btn-primary {
-    @apply bg-gradient-to-r from-brand-600 to-pink-600 hover:from-brand-500 hover:to-pink-500 text-white font-medium py-3 px-6 rounded-xl transition-all duration-300 transform hover:-translate-y-0.5 hover:shadow-glow-primary active:translate-y-0 flex items-center justify-center gap-2;
+    @apply bg-white hover:bg-zinc-200 text-black font-medium py-2.5 px-5 rounded-lg text-sm transition-all duration-200 flex items-center justify-center gap-1.5 shadow-sm active:scale-98 cursor-pointer;
   }
 
   .btn-secondary {
-    @apply bg-white/5 hover:bg-white/10 text-white border border-white/10 font-medium py-3 px-6 rounded-xl transition-all duration-300 flex items-center justify-center gap-2;
+    @apply bg-zinc-900/50 hover:bg-zinc-800/80 text-zinc-300 hover:text-white border border-zinc-800 font-medium py-2.5 px-5 rounded-lg text-sm transition-all duration-200 flex items-center justify-center gap-1.5 active:scale-98 cursor-pointer;
+  }
+
+  .saas-card-glow {
+    position: relative;
+  }
+  .saas-card-glow::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.1), transparent);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
   }
 }
 
 /* Animations */
 @keyframes float {
   0% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
+  50% { transform: translateY(-6px); }
   100% { transform: translateY(0px); }
 }
 
@@ -67,13 +89,23 @@
 }
 
 @keyframes pulse-glow {
-  0%, 100% { opacity: 0.2; }
-  50% { opacity: 0.4; }
+  0%, 100% { opacity: 0.1; }
+  50% { opacity: 0.2; }
 }
 
 .glow-overlay {
   position: absolute;
   pointer-events: none;
-  background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.08) 0%, transparent 60%);
   animation: pulse-glow 8s ease-in-out infinite;
 }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+

@@ -54,43 +54,46 @@ const Signup = () => {
   return (
     <div className="min-h-[calc(100vh-80px)] flex items-center justify-center px-4 py-12 relative overflow-hidden">
       
-      {/* Background glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-brand-500/10 rounded-full blur-[100px] pointer-events-none"></div>
+      {/* Background Dot Grid Overlay */}
+      <div className="absolute inset-0 bg-dot-grid opacity-30 pointer-events-none z-0"></div>
+
+      {/* Background Aurora Glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[300px] bg-brand-500/5 rounded-full blur-[100px] pointer-events-none z-0"></div>
 
       {loading && <Loader message="Setting up your account..." />}
 
-      <div className="glass-panel p-8 max-w-md w-full shadow-glow-primary border-brand-500/10 relative z-10">
+      <div className="glass-panel saas-card-glow p-8 max-w-md w-full shadow-2xl border-zinc-800/80 bg-zinc-950/75 relative z-10">
         
         {/* Card Header */}
         <div className="text-center mb-8">
-          <div className="p-3 bg-brand-500/10 text-brand-400 rounded-2xl w-fit mx-auto mb-4 border border-brand-500/20">
-            <Sparkles className="h-6 w-6" />
+          <div className="p-2.5 bg-zinc-900 border border-zinc-800 text-zinc-300 rounded-xl w-fit mx-auto mb-4">
+            <Sparkles className="h-5 w-5" />
           </div>
-          <h2 className="text-3xl font-display font-extrabold text-white">Create Account</h2>
-          <p className="text-gray-400 mt-2 text-sm">Start generating custom email campaigns</p>
+          <h2 className="text-2xl font-display font-extrabold text-white tracking-tight">Create Account</h2>
+          <p className="text-zinc-400 mt-1.5 text-xs">Start generating custom email campaigns</p>
         </div>
 
         {/* Alerts */}
         {error && (
-          <div className="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-200 text-sm flex items-center gap-2">
-            <AlertCircle className="h-5 w-5 text-red-400 flex-shrink-0" />
+          <div className="mb-5 p-3.5 rounded-lg bg-red-950/30 border border-red-900/30 text-red-200 text-xs flex items-center gap-2">
+            <AlertCircle className="h-4.5 w-4.5 text-red-400 flex-shrink-0" />
             <span>{error}</span>
           </div>
         )}
 
         {successMsg && (
-          <div className="mb-6 p-4 rounded-xl bg-green-500/10 border border-green-500/20 text-green-200 text-sm">
+          <div className="mb-5 p-3.5 rounded-lg bg-green-950/30 border border-green-900/30 text-green-200 text-xs">
             {successMsg}
           </div>
         )}
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="space-y-5">
+        <form onSubmit={handleSubmit} className="space-y-4">
           
           <div className="flex flex-col">
-            <label className="text-xs font-semibold text-gray-400 mb-1.5 ml-1">Full Name</label>
+            <label className="text-[11px] font-medium text-zinc-400 mb-1.5 ml-1">Full Name</label>
             <div className="relative">
-              <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-500">
+              <span className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-zinc-500">
                 <User className="h-4 w-4" />
               </span>
               <input
@@ -99,16 +102,16 @@ const Signup = () => {
                 value={formData.name}
                 onChange={handleChange}
                 placeholder="John Doe"
-                className="glass-input pl-10 w-full"
+                className="glass-input pl-9 w-full"
                 required
               />
             </div>
           </div>
 
           <div className="flex flex-col">
-            <label className="text-xs font-semibold text-gray-400 mb-1.5 ml-1">Email Address</label>
+            <label className="text-[11px] font-medium text-zinc-400 mb-1.5 ml-1">Email Address</label>
             <div className="relative">
-              <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-500">
+              <span className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-zinc-500">
                 <Mail className="h-4 w-4" />
               </span>
               <input
@@ -117,16 +120,16 @@ const Signup = () => {
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="john@company.com"
-                className="glass-input pl-10 w-full"
+                className="glass-input pl-9 w-full"
                 required
               />
             </div>
           </div>
 
           <div className="flex flex-col">
-            <label className="text-xs font-semibold text-gray-400 mb-1.5 ml-1">Password</label>
+            <label className="text-[11px] font-medium text-zinc-400 mb-1.5 ml-1">Password</label>
             <div className="relative">
-              <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-500">
+              <span className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-zinc-500">
                 <Lock className="h-4 w-4" />
               </span>
               <input
@@ -135,7 +138,7 @@ const Signup = () => {
                 value={formData.password}
                 onChange={handleChange}
                 placeholder="••••••••"
-                className="glass-input pl-10 w-full"
+                className="glass-input pl-9 w-full"
                 required
               />
             </div>
@@ -148,9 +151,9 @@ const Signup = () => {
         </form>
 
         {/* Footer link */}
-        <p className="text-center text-sm text-gray-500 mt-6">
+        <p className="text-center text-xs text-zinc-500 mt-6">
           Already have an account?{' '}
-          <Link to="/login" className="text-brand-400 hover:text-brand-300 font-semibold transition-colors">
+          <Link to="/login" className="text-zinc-200 hover:text-white font-medium underline underline-offset-4 transition-colors">
             Sign In
           </Link>
         </p>

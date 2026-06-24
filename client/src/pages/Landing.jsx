@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
-import { Sparkles, Mail, Send, Zap, MessageSquare, ShieldCheck, ArrowRight } from 'lucide-react';
+import { Sparkles, Mail, Send, Zap, MessageSquare, ArrowRight } from 'lucide-react';
 
 const Landing = () => {
   const { isAuthenticated } = useContext(AuthContext);
@@ -9,40 +9,43 @@ const Landing = () => {
   return (
     <div className="relative min-h-[calc(100vh-80px)] flex flex-col justify-between overflow-hidden">
       
-      {/* Background Neon Glow Overlay */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-brand-500/10 rounded-full blur-[120px] pointer-events-none"></div>
+      {/* Background Dot Grid Overlay */}
+      <div className="absolute inset-0 bg-dot-grid opacity-30 pointer-events-none z-0"></div>
+      
+      {/* Background Aurora Glow */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[350px] bg-gradient-to-b from-brand-500/10 to-transparent rounded-full blur-[100px] pointer-events-none z-0"></div>
 
-      <main className="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-20 sm:pt-20">
+      <main className="relative flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-24 sm:pt-24 z-10">
         
         {/* Hero Section */}
         <div className="text-center max-w-4xl mx-auto">
           
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 mb-6 sm:mb-8 animate-float">
-            <Sparkles className="h-4 w-4 text-brand-400" />
-            <span className="text-xs font-semibold text-gray-300">Powered by Gemini-1.5-Flash</span>
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-zinc-900/80 border border-zinc-800 mb-6 sm:mb-8 shadow-inner">
+            <Sparkles className="h-3.5 w-3.5 text-zinc-400" />
+            <span className="text-[11px] font-medium text-zinc-300">Powered by Groq & Llama-3.3</span>
           </div>
 
-          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-display font-extrabold tracking-tight text-white mb-6 leading-none">
-            Write Cold Outreach That <span className="text-gradient">Gets Replies</span>
+          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-display font-extrabold tracking-tight text-white mb-6 leading-none bg-gradient-to-b from-white to-zinc-400 bg-clip-text text-transparent">
+            Write Cold Outreach That <span className="text-zinc-100 underline decoration-zinc-700 decoration-wavy underline-offset-8">Gets Replies</span>
           </h1>
 
-          <p className="text-base sm:text-xl text-gray-400 max-w-2xl mx-auto mb-8 sm:mb-10 leading-relaxed">
-            Generate full outreach campaigns in seconds. Get matching cold emails, follow-up sequences, and low-friction LinkedIn DMs from a single natural-language description.
+          <p className="text-base sm:text-lg text-zinc-400 max-w-2xl mx-auto mb-10 sm:mb-12 leading-relaxed font-normal">
+            Generate complete multi-channel outreach campaigns in seconds. Get customized cold emails, follow-up emails, and professional LinkedIn connection DMs from a single prompt.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             {isAuthenticated ? (
               <Link to="/dashboard" className="btn-primary w-full sm:w-auto">
                 Go to Dashboard
-                <ArrowRight className="h-5 w-5" />
+                <ArrowRight className="h-4 w-4" />
               </Link>
             ) : (
               <>
-                <Link to="/signup" className="btn-primary w-full sm:w-auto text-base">
+                <Link to="/signup" className="btn-primary w-full sm:w-auto">
                   Generate Campaign Free
-                  <Sparkles className="h-5 w-5" />
+                  <Sparkles className="h-4 w-4" />
                 </Link>
-                <Link to="/login" className="btn-secondary w-full sm:w-auto text-base">
+                <Link to="/login" className="btn-secondary w-full sm:w-auto">
                   Sign In
                 </Link>
               </>
@@ -52,37 +55,37 @@ const Landing = () => {
         </div>
 
         {/* Feature Cards Section */}
-        <div className="mt-24 sm:mt-32 grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="mt-28 sm:mt-36 grid grid-cols-1 md:grid-cols-3 gap-6 relative">
           
-          <div className="glass-panel p-8 relative overflow-hidden group hover:border-brand-500/30 transition-all duration-300">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-brand-500/5 rounded-bl-full pointer-events-none transition-all group-hover:scale-110"></div>
-            <div className="p-3 bg-brand-500/10 text-brand-400 rounded-xl w-fit mb-6">
-              <Mail className="h-6 w-6" />
+          {/* Card 1 */}
+          <div className="glass-panel saas-card-glow p-8 relative overflow-hidden group hover:border-zinc-700 hover:bg-zinc-900/30 transition-all duration-300">
+            <div className="p-2.5 bg-zinc-900 border border-zinc-800 text-zinc-300 rounded-lg w-fit mb-5">
+              <Mail className="h-5 w-5" />
             </div>
-            <h3 className="text-xl font-bold text-white mb-3">Structured Campaigns</h3>
-            <p className="text-gray-400 text-sm leading-relaxed">
+            <h3 className="text-lg font-bold text-white mb-2.5">Structured Campaigns</h3>
+            <p className="text-zinc-400 text-sm leading-relaxed">
               Every generation compiles a cohesive subject line, primary email body, social DM, and a secondary follow-up, giving you a ready-to-run sequence.
             </p>
           </div>
 
-          <div className="glass-panel p-8 relative overflow-hidden group hover:border-pink-500/30 transition-all duration-300">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-pink-500/5 rounded-bl-full pointer-events-none transition-all group-hover:scale-110"></div>
-            <div className="p-3 bg-pink-500/10 text-pink-400 rounded-xl w-fit mb-6">
-              <Zap className="h-6 w-6" />
+          {/* Card 2 */}
+          <div className="glass-panel saas-card-glow p-8 relative overflow-hidden group hover:border-zinc-700 hover:bg-zinc-900/30 transition-all duration-300">
+            <div className="p-2.5 bg-zinc-900 border border-zinc-800 text-zinc-300 rounded-lg w-fit mb-5">
+              <Zap className="h-5 w-5" />
             </div>
-            <h3 className="text-xl font-bold text-white mb-3">Intelligent Contexts</h3>
-            <p className="text-gray-400 text-sm leading-relaxed">
+            <h3 className="text-lg font-bold text-white mb-2.5">Intelligent Contexts</h3>
+            <p className="text-zinc-400 text-sm leading-relaxed">
               Fine-tune copy by specifying target audience segments and desired tones. Convert raw job descriptions into hyper-targeted value propositions.
             </p>
           </div>
 
-          <div className="glass-panel p-8 relative overflow-hidden group hover:border-indigo-500/30 transition-all duration-300">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/5 rounded-bl-full pointer-events-none transition-all group-hover:scale-110"></div>
-            <div className="p-3 bg-indigo-500/10 text-indigo-400 rounded-xl w-fit mb-6">
-              <MessageSquare className="h-6 w-6" />
+          {/* Card 3 */}
+          <div className="glass-panel saas-card-glow p-8 relative overflow-hidden group hover:border-zinc-700 hover:bg-zinc-900/30 transition-all duration-300">
+            <div className="p-2.5 bg-zinc-900 border border-zinc-800 text-zinc-300 rounded-lg w-fit mb-5">
+              <MessageSquare className="h-5 w-5" />
             </div>
-            <h3 className="text-xl font-bold text-white mb-3">Generation History</h3>
-            <p className="text-gray-400 text-sm leading-relaxed">
+            <h3 className="text-lg font-bold text-white mb-2.5">Generation History</h3>
+            <p className="text-zinc-400 text-sm leading-relaxed">
               Never lose high-performing templates. All created campaigns are saved securely to your private database history so you can retrieve them anytime.
             </p>
           </div>
