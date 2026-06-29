@@ -186,8 +186,8 @@ const login = async (req, res, next) => {
     const user = await User.findOne({ email });
 
     if (!user) {
-      res.status(401);
-      throw new Error('Invalid email or password');
+      res.status(404);
+      throw new Error('User does not exist. Please sign up first.');
     }
 
     if (!user.isVerified) {

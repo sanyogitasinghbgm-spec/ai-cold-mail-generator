@@ -38,7 +38,7 @@ const Login = () => {
       // Redirect after a short delay
       setTimeout(() => {
         navigate('/dashboard');
-      }, 1000);
+      }, 200);
 
     } catch (err) {
       setLoading(false);

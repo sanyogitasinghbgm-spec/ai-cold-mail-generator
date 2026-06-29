@@ -1,5 +1,9 @@
 const nodemailer = require('nodemailer');
 
+// Connection pooling cache for SMTP to avoid slow handshakes on every request
+let cachedTransporter = null;
+let cachedCredentialsKey = '';
+
 const sendEmail = async ({ to, subject, html, text }) => {
   // If we are using mock mode, just log to stdout
   if (process.env.USE_MOCK_EMAIL === 'true') {
@@ -135,35 +139,47 @@ const sendEmail = async ({ to, subject, html, text }) => {
     }
   }
 
-  const smtpConfig = {
-    auth: {
-      user: user,
-      pass: pass,
-    },
-    connectionTimeout: 5000, // 5 seconds timeout
-    socketTimeout: 5000,     // 5 seconds socket timeout
-  };
+  const credentialsKey = `${host || 'gmail'}:${port}:${user}:${pass}`;
+  let transporter;
 
-  // Setup transporter dynamically
-  if (host) {
-    console.log(`SMTP Connection Attempt: Host=${host}, Port=${port}`);
-    smtpConfig.host = host;
-    smtpConfig.port = port;
-    
-    // Automatically set secure: false for STARTTLS ports (587, 25) unless secure is explicitly set
-    const secureEnv = process.env.EMAIL_SECURE || process.env.SMTP_SECURE;
-    if (secureEnv !== undefined) {
-      smtpConfig.secure = secureEnv === 'false' ? false : true;
-    } else {
-      smtpConfig.secure = (port === 587 || port === 25) ? false : true;
-    }
-    console.log(`SMTP Transporter Secure option set to: ${smtpConfig.secure}`);
+  if (cachedTransporter && cachedCredentialsKey === credentialsKey) {
+    transporter = cachedTransporter;
   } else {
-    console.log('No SMTP_HOST specified in environment. Defaulting to standard Gmail service configuration.');
-    smtpConfig.service = 'gmail';
-  }
+    const smtpConfig = {
+      auth: {
+        user: user,
+        pass: pass,
+      },
+      pool: true, // Enable connection pooling
+      maxConnections: 5,
+      maxMessages: 100,
+      connectionTimeout: 5000, // 5 seconds timeout
+      socketTimeout: 5000,     // 5 seconds socket timeout
+    };
 
-  const transporter = nodemailer.createTransport(smtpConfig);
+    // Setup transporter dynamically
+    if (host) {
+      console.log(`SMTP Connection Attempt (Pooled): Host=${host}, Port=${port}`);
+      smtpConfig.host = host;
+      smtpConfig.port = port;
+      
+      // Automatically set secure: false for STARTTLS ports (587, 25) unless secure is explicitly set
+      const secureEnv = process.env.EMAIL_SECURE || process.env.SMTP_SECURE;
+      if (secureEnv !== undefined) {
+        smtpConfig.secure = secureEnv === 'false' ? false : true;
+      } else {
+        smtpConfig.secure = (port === 587 || port === 25) ? false : true;
+      }
+      console.log(`SMTP Transporter Secure option set to: ${smtpConfig.secure}`);
+    } else {
+      console.log('No SMTP_HOST specified in environment. Defaulting to standard Gmail service configuration (Pooled).');
+      smtpConfig.service = 'gmail';
+    }
+
+    transporter = nodemailer.createTransport(smtpConfig);
+    cachedTransporter = transporter;
+    cachedCredentialsKey = credentialsKey;
+  }
 
   const mailOptions = {
     from: `"AI Cold Mail Generator" <${user || 'no-reply@gmail.com'}>`,

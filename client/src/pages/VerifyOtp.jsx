@@ -50,7 +50,7 @@ const VerifyOtp = () => {
       // Redirect after a short delay
       setTimeout(() => {
         navigate('/dashboard');
-      }, 1500);
+      }, 200);
 
     } catch (err) {
       setLoading(false);

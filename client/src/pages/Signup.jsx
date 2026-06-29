@@ -43,7 +43,7 @@ const Signup = () => {
       // Redirect after a short delay
       setTimeout(() => {
         navigate(`/verify-otp?email=${encodeURIComponent(email)}`);
-      }, 1500);
+      }, 200);
 
     } catch (err) {
       setLoading(false);
